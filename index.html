@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Panda Birthday 🐼</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#6a85ff,#b36bff);
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+overflow:hidden;
+padding:20px;
+color:#333;
+}
+
+.card{
+background:white;
+width:100%;
+max-width:380px;
+padding:30px 25px;
+border-radius:18px;
+box-shadow:0 15px 40px rgba(0,0,0,0.2);
+animation:fadeIn .6s ease;
+}
+
+h2{
+margin-top:0;
+}
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:10px;
+margin:10px;
+cursor:pointer;
+font-size:15px;
+font-weight:500;
+transition:.3s;
+}
+
+.open{
+background:#ff6b81;
+color:white;
+}
+
+.open:hover{
+transform:scale(1.05);
+}
+
+.later{
+background:#eee;
+}
+
+.hidden{
+display:none;
+}
+
+#message{
+max-height:300px;
+overflow-y:auto;
+text-align:left;
+font-size:14px;
+line-height:1.6;
+padding-right:5px;
+}
+
+#confetti{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(15px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<!-- SCREEN 1 -->
+
+<div id="screen1" class="card">
+
+<h2>Hey Panda 🐼</h2>
+
+<p>I have something for you today 👀</p>
+
+<p>Do you want to open your birthday surprise? 🎁</p>
+
+<button class="open" onclick="openSurprise()">Open 🎁</button>
+<button class="later" id="laterBtn">Later 😌</button>
+
+</div>
+
+
+<!-- SCREEN 2 -->
+
+<div id="screen2" class="card hidden">
+
+<h2>Happy Birthday Panda 🐼🎂</h2>
+
+<p>Okay okay… Time to celebrate 🥳✨</p>
+
+<button class="open" onclick="showTap()">Continue ➜</button>
+
+</div>
+
+
+<!-- SCREEN 3 -->
+
+<div id="screen3" class="card hidden">
+
+<h3>Tap for Message 💌</h3>
+
+<button class="open" onclick="showMessage()">Tap Here</button>
+
+</div>
+
+
+<!-- SCREEN 4 -->
+
+<div id="screen4" class="card hidden">
+
+<h2>Happy Birthday Panda 🐼🎂</h2>
+
+<div id="message">
+
+<p>Okay okay… before you try to close this and escape like always 😏 just read this for a second 😂</p>
+
+<p><b>First of all… Happy Happiest Birthday to the sweetest soul 🎂✨</b></p>
+
+<p>I just wanted to say… ippatikaina introvert nunchi extrovert ga change avvu 😂👉👈  
+Konchem maatladadam start chey orike navvadam kadu 😜</p>
+
+<p>But honestly… you’re one of those people who are just nice to have around 🤍  
+Life feels a little lighter when you’re there 😌</p>
+
+<p>Thanks for being my <b>Human Diary</b> 📖 and listening to all the random nonsense I say 😂</p>
+
+<p>And yeah… I really hope this year turns out to be kind to you — more good days, more laughs, and lots of little moments that make you happy 🌼✨</p>
+<p>And many reasons to smile 🌟😊</p>
+
+<p>So yeah…enjoy your day and don’t disappear into your introvert cave today okay? 😄</p>
+
+<p><b>P.S.</b> If you smiled even a little while reading this… then my plan worked 😌✨</p>
+
+</div>
+
+
+<script>
+
+const laterBtn=document.getElementById("laterBtn");
+
+laterBtn.addEventListener("mouseover",()=>{
+laterBtn.style.position="absolute";
+laterBtn.style.top=Math.random()*80+"%";
+laterBtn.style.left=Math.random()*80+"%";
+});
+
+function openSurprise(){
+document.getElementById("screen1").classList.add("hidden");
+document.getElementById("screen2").classList.remove("hidden");
+startConfetti();
+}
+
+function showTap(){
+document.getElementById("screen2").classList.add("hidden");
+document.getElementById("screen3").classList.remove("hidden");
+}
+
+function showMessage(){
+document.getElementById("screen3").classList.add("hidden");
+document.getElementById("screen4").classList.remove("hidden");
+}
+
+
+function startConfetti(){
+
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let pieces=[];
+
+for(let i=0;i<120;i++){
+pieces.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:6,
+speed:2+Math.random()*3
+})
+}
+
+function update(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+pieces.forEach(p=>{
+
+p.y+=p.speed;
+
+if(p.y>canvas.height){
+p.y=0;
+}
+
+ctx.fillStyle="white";
+ctx.fillRect(p.x,p.y,p.size,p.size);
+
+});
+
+requestAnimationFrame(update);
+
+}
+
+update();
+
+}
+
+</script>
+
+</body>
+</html>
